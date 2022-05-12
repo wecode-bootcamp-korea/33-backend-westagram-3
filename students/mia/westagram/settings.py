@@ -11,12 +11,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-from pathlib import Path #기존에 settings.py 에 있는 코드
 
 from my_settings import DATABASES, SECRET_KEY
-# import pymysql
-    
-# pymysql.install_as_MySQLdb()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -78,22 +75,6 @@ DATABASES = DATABASES
 
 
 WSGI_APPLICATION = 'westagram.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default' : {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'westagram',
-#         'USER': 'DB접속 계정명',
-#         'PASSWORD': 'Hellomia940414',
-#         'HOST': '127.0.0.1',
-#         'PORT': '3306',
-#      	'OPTIONS': {'charset': 'utf8mb4'}
-#     }
-# }
 
 
 # Password validation
