@@ -1,4 +1,4 @@
-from django.shortcuts import render
+# from django.shortcuts import render
 
 # Create your views here.
 import json
@@ -22,7 +22,7 @@ class SignUpView(View):
                 return JsonResponse({"message":"INVALID_EMAIL_--_NEEDS_@_AND_."}, status=400)
             # 비밀번호는 8자리 이상, 문자 숫자, 특수문자의 복합 -- 그러지 않을 경우, 에러 반환
             if not re.match(r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$", input_data["password"]):
-                return JsonResponse({"message":"PASSWORD_REQUIRES_A_COMBINATION_OF_MIMIMUM_EIGHT_LETTERS,NUMBERS,AND_SPECIAL_SYMBOLS"}, status=400)
+                return JsonResponse({"message" : "PASSWORD_REQUIRES_A_COMBINATION_OF_MIMIMUM_EIGHT_LETTERS,NUMBERS,AND_SPECIAL_SYMBOLS"}, status=400)
             
             User.objects.create(
                 name          = input_data['name'],
@@ -30,7 +30,22 @@ class SignUpView(View):
                 password      = input_data['password'],
                 mobile_number = input_data['mobile_number'],
             )
-            return JsonResponse({"messsage":"SUCCESS"}, status=201)
+            return JsonResponse({"messsage" : "SUCCESS"}, status=201)
 
         except KeyError:
-            return JsonResponse({"message":"Key_Error"}, status=400)
+            return JsonResponse({"message" : "KeyError"}, status=400)
+    
+class SignInView(View):
+    def post(self,request):
+        try:
+            input_data = json.loads(request.body)
+
+            # non-existent log-in info & wrong password
+            if not User.objects.filter(email = input_data['email'], password = input_data['password']).exists():
+                return JsonResponse({"message" : "INVALID_USER"}, status=401)
+            # log-in success
+            return JsonResponse({"message" : "SUCCESS"}, status=200)
+
+            # account/password not delievered
+        except KeyError:
+            return JsonResponse({"message" : "KEY_ERROR"}, status=400)
