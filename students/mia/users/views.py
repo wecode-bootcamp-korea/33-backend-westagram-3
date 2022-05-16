@@ -18,10 +18,10 @@ class SignUpView(View):
             if User.objects.filter(email = input_data['email']).exists():
                 return JsonResponse({"message":"THE_USER_EMAIL_ALREADY_EXISTS"}, status=400)
             # 이메일에 @ 또는 .이 없으면 에러 반환 
-            if re.match(r"^[a-zA-Z0-9+-_.]+@/[a-zA-Z0-9-.]+\.[a-zA-Z0-9-]$", input_data['email'])== None:
+            if not re.match(r"^[a-zA-Z0-9+-_.]+@/[a-zA-Z0-9-.]+\.[a-zA-Z0-9-]$", input_data['email']):
                 return JsonResponse({"message":"INVALID_EMAIL_--_NEEDS_@_AND_."}, status=400)
             # 비밀번호는 8자리 이상, 문자 숫자, 특수문자의 복합 -- 그러지 않을 경우, 에러 반환
-            if re.match(r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$", input_data["password"])==None:
+            if not re.match(r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$", input_data["password"]):
                 return JsonResponse({"message":"PASSWORD_REQUIRES_A_COMBINATION_OF_MIMIMUM_EIGHT_LETTERS,NUMBERS,AND_SPECIAL_SYMBOLS"}, status=400)
             
             User.objects.create(
