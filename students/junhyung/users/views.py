@@ -13,14 +13,14 @@ class SignUpView(View):
             data = json.loads(request.body)
 
 
-            if User.objects.filter(email=data['email']).exists():
-                return JsonResponse({"message": "ERROR_EMAIL_ALREADY_EXIST"}, status=400)
+            if User.objects.filter(mail=data['mail']).exists():
+                return JsonResponse({"message": "ERROR_MAIL_ALREADY_EXIST"}, status=400)
                
-            if (data["email"] == "") or (data["password"] == ""):
-                return JsonResponse({"message": "ERROR_EMPTY_EMAIL_OR_PASSWORD"}, status=400)
+            if (data["mail"] == "") or (data["password"] == ""):
+                return JsonResponse({"message": "ERROR_EMPTY_MAIL_OR_PASSWORD"}, status=400)
                
-            if re.match(r"^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", data["email"]) == None:
-                return JsonResponse({"message": "ERROR_EMAIL_NEED_@AND."}, status=400)
+            if re.match(r"^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", data["mail"]) == None:
+                return JsonResponse({"message": "ERROR_MAIL_NEED_@AND."}, status=400)
 
             if re.match(r"^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$", data["password"]) == None:
                 return JsonResponse({"message": "ERROR_REQUIRE_8_LETTER,NUMBER,SPECIAL_SYMBOLS)"}, status=400)
@@ -39,5 +39,5 @@ class SignUpView(View):
             number = data['number']
 
 
-            email_regex = "'^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'"
+            mail_regex = "'^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'"
             password_regex = ""
