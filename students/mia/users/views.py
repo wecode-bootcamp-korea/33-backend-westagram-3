@@ -1,23 +1,20 @@
-# from django.shortcuts import render
-
 # Create your views here.
+
 import json
 import re
 import bcrypt 
-import jwt
 
 from django.http import JsonResponse
 from django.views import View
 
 from .models import User
-from my_settings import SECRET_KEY
 
 class SignUpView(View):
-    def post(self, request):
-        try:
+    def post(self, request): 
+        try                : 
             input_data = json.loads(request.body)
-            email = input_data['email']
-            password = input_data['password']
+            email      = input_data['email']
+            password   = input_data['password']
 
             # 기존에 존재하는 이메일이 중복되면 중복 에러 메세지 반환
             if User.objects.filter(email = email).exists():
