@@ -50,14 +50,9 @@ class SignInView(View):
             # non-existent log-in info & wrong password
             if not User.objects.filter(email = input_data['email'], password = input_data['password']).exists():
                 return JsonResponse({"message" : "INVALID_USER"}, status=401)
-            
-            if bcrypt.checkpw(input_data['password'].encode('UTF-8'), input_data['password'].encode('UTF-8')):
-                user = User.objects.get(email = input_data['email'])
-                token = jwt.encode({'user' : user.id}, SECRET_KEY, algorithm='HS256').decode('UTF-8')
-                return JsonResponse({"token" : token}, status=200)
 
             # log-in success
-            # return JsonResponse({"message" : "SUCCESS"}, status=200)
+            return JsonResponse({"message" : "SUCCESS"}, status=200)
 
             # account/password not delievered
         except KeyError:
