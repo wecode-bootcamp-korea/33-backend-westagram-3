@@ -37,7 +37,3 @@ class SignUpView(View):
             mail = data['mail']
             password = data['password']
             number = data['number']
-
-
-            mail_regex = "'^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'"
-            password_regex = ""
