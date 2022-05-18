@@ -41,7 +41,6 @@ class SignInView(View):
     def post(self,request):
         try:
             input_data = json.loads(request.body)
-            print(request.body)
 
             email    = input_data['email']
             password = input_data['password']
