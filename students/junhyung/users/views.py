@@ -21,13 +21,13 @@ class SignUpView(View):
             REX_MAIL     = "^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
             REX_PASSWORD = "^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$"
 
-            if User.objects.filter(mail=mail).exists():
+            if not User.objects.filter(mail=mail).exists():
                 return JsonResponse({"Message": "INVALID_MAIL"}, status=400)
                
-            if re.match(REX_MAIL, mail) == None:
+            if not re.match(REX_MAIL, mail):
                 return JsonResponse({"Message": "INVALID_MAIL"}, status=400)
 
-            if re.match(REX_PASSWORD, password) == None:
+            if not re.match(REX_PASSWORD, password):
                 return JsonResponse({"Message": "INVALID_PASSWORD"}, status=400)
 
             User.objects.create(
@@ -52,7 +52,7 @@ class LoginView(View):
             password = data['password']
 
             if not User.objects.filter(mail = mail).exists():
-                return JsonResponse({'Message' : 'INVALID_ERROR' }, status=401)
+                return JsonResponse({'Message' : 'INVALID_MAIL' }, status=401)
 
             if not User.objects.filter(password = password).exists():
                 return JsonResponse({'Message' : 'INVALID_PASSWORD'}, status=401)
