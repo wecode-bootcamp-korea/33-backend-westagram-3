@@ -1,9 +1,6 @@
 # Create your views here.
 
-import json
-import re
-import bcrypt 
-import jwt
+import json, re, bcrypt, jwt
 
 from django.http  import JsonResponse
 from django.views import View
@@ -21,7 +18,7 @@ class SignUpView(View):
             if User.objects.filter(email = email).exists():
                 return JsonResponse({"message" : "THE_USER_EMAIL_ALREADY_EXISTS"}, status=400)
 
-            if not re.match(r"^[a-zA-Z0-9+-_.]+@/[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", email):
+            if not re.match(r"^[a-zA-Z0-9_-]+@[a-z]+.[a-z]+$", email):
                 return JsonResponse({"message" : "INVALID_EMAIL_--_NEEDS_@_AND_."}, status=400)
          
             if not re.match(r"^(?=.{8,16}$)(?=.*[a-z])(?=.*[0-9]).*$", password):
@@ -30,10 +27,10 @@ class SignUpView(View):
             hashed_password = bcrypt.hashpw(password.encode("UTF-8"), bcrypt.gensalt()).decode("UTF-8")
 
             User.objects.create(
-                name          = ['name'],
+                name          = input_data['name'],
                 email         = email,
                 password      = hashed_password,
-                mobile_number = ['mobile_number']
+                mobile_number = input_data['mobile_number']
             )
             return JsonResponse({"messsage" : "SUCCESS"}, status=201)
 
@@ -43,18 +40,18 @@ class SignUpView(View):
 class SignInView(View):
     def post(self,request):
         try:
-            
             input_data = json.loads(request.body)
+            print(request.body)
 
             email    = input_data['email']
             password = input_data['password']
-            user  = User.objects.get(email = email)
+            user     = User.objects.get(email = email)
 
             if not User.objects.filter(email = email).exists():
                 return JsonResponse({"message" : "INVALID_USER"}, status=401)
 
             if bcrypt.checkpw(password.encode('UTF-8'), user.password.encode('UTF-8)')):
-                token = jwt.encode({'user' : user.id}, settings.SECRET_KEY, settings.ALGORITHM)
+                token = jwt.encode({'user_id' : user.id}, settings.SECRET_KEY, settings.ALGORITHM)
                 return JsonResponse({'token' : token}, status=200)
 
         except KeyError:
