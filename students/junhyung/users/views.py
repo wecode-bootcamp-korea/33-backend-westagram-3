@@ -1,5 +1,5 @@
-import json
-import re
+import json, re
+
 
 from django.http    import JsonResponse
 from django.views   import View
@@ -48,7 +48,7 @@ class LoginView(View):
         try:
             data = json.loads(request.body)
            
-            mail = data['mail']
+            mail     = data['mail']
             password = data['password']
 
             if not User.objects.filter(mail = mail, password = password).exists():
