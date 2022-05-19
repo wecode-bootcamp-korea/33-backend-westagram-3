@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 
-from my_settings import DATABASES, SECRET_KEY
+from my_settings import ALGORITHM, DATABASES, SECRET_KEY
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -73,6 +73,8 @@ TEMPLATES = [
     },
 ]
 DATABASES = DATABASES
+
+ALGORITHM = ALGORITHM
 
 
 WSGI_APPLICATION = 'westagram.wsgi.application'
