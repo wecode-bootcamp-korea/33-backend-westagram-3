@@ -1,11 +1,11 @@
 from django.urls import path 
-from bada.views import ProductsView 
+from bada.views import MenuView 
 # from health_check.views import ping
 import json
 
 
 urlpatterns = [
-    path("", ProductsView.as_view())
+    path("", MenuView.as_view())
 ]
 
-a = json.loads("ss")
+# a = json.loads("ss")

@@ -3,5 +3,5 @@ from django.urls import path, include
 from health_check.views import ping
 
 urlpatterns = [
-    path("products", include("bada.urls")
+    path("menu", include("bada.urls"))
 ]
