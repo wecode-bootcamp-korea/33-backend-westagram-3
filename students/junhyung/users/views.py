@@ -1,4 +1,6 @@
-import json, re
+import json, re, bcrypt
+
+
 
 
 from django.http    import JsonResponse
@@ -21,6 +23,9 @@ class SignUpView(View):
             REX_MAIL     = "^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
             REX_PASSWORD = "^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$"
 
+            hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+
+
             if not User.objects.filter(mail=mail).exists():
                 return JsonResponse({"Message": "INVALID_MAIL"}, status=400)
                
@@ -33,7 +38,7 @@ class SignUpView(View):
             User.objects.create(
                 name     = name,
                 mail     = mail,
-                password = password,
+                password = hashed_password,
                 number   = number,
             )
 
