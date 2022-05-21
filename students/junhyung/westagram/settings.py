@@ -1,5 +1,5 @@
 from pathlib import Path
-from my_settings import DATABASES, SECRET_KEY
+from my_settings import DATABASES, SECRET_KEY, ALGORITHM
 
 import pymysql
 
@@ -21,6 +21,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 SECRET_KEY = SECRET_KEY
+ALGORITHM =  ALGORITHM
 
 # Application definition
 
@@ -96,7 +97,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'asia/seoul'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
