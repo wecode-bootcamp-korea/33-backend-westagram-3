@@ -3,7 +3,7 @@ from health_check.views import ping
 
 urlpatterns = [
 	path("ping", ping),
-    path("", include("user.urls"))
+   # path("", include("users.urls"))
 
 
 ]
